@@ -26,8 +26,8 @@ Go to api directory and then run below command in terminal or cmd.
 
 ## Usage
 
-Check if both api and client are working properly in the terminal.
-Go to your browser and open "localhost:3000" (if react doesn't open it automatically)
+- Check if both api and client are working properly in the terminal.
+- Go to your browser and open "localhost:3000" (if react doesn't open it automatically)
 
 ### Note:-
 
