@@ -1,0 +1,18 @@
+const mongoose = require("mongoose");
+
+const tagSchema = new mongoose.Schema(
+  {
+    //the user who sent the request....
+    tagTitle: {
+      type: "String",
+      required: true,
+      unique: true,
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
+
+const Tag = mongoose.model("Tag", tagSchema);
+module.exports = Tag;
