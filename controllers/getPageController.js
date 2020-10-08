@@ -5,9 +5,10 @@ const Tag = require("../models/tag");
 const Blog = require("../models/blog");
 const SuggestedTag = require("../models/suggestedTag");
 
-// MY OCD of colorful console.logs for debugging... IT HELPS
 const error = chalk.bold.red;
 const success = chalk.keyword("green");
+
+// =======================================get user tags from database=============================================
 
 module.exports.getUserTags = async function (req, res) {
   try {
@@ -37,6 +38,8 @@ module.exports.getUserTags = async function (req, res) {
     });
   }
 };
+
+// ====================================fwetch page with puppeter=============================================
 
 module.exports.getPage = async function (req, res) {
   try {
@@ -164,7 +167,7 @@ module.exports.getPage = async function (req, res) {
   }
 };
 
-//get page on tags........................
+//===============================================get page on tags...................................................
 
 module.exports.getPageWithTag = async function (req, res) {
   try {
@@ -228,7 +231,7 @@ module.exports.getPageWithTag = async function (req, res) {
   }
 };
 
-//.................get more with tag===================
+//......................................................get more with tag==============================================
 
 module.exports.loadMoreWithTag = async function (req, res) {
   try {
