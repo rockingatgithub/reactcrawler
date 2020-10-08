@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 mongoose.connect(`mongodb://localhost/reactcrawler`, {
   useUnifiedTopology: true,
+  useNewUrlParser: true,
 });
 
 const db = mongoose.connection;
