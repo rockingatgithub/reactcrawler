@@ -7,6 +7,8 @@ A crawler to with node.js as backend and react as frontend.
 > Below are links for both repo. You need to clone both in same directory.
 > Clone the [repo](https://github.com/rockingatgithub/reactcrawler) and
 > Also clone the [frontend-repo](https://github.com/rockingatgithub/reactcrawler-client)
+> All front-end request API is on localhost:9000 and react runs on port 3000(by default).
+> If you want redirect request to other port make changes in the fetch-url in the react app.
 > Make sure you have mongodb community edition installed as this project uses mongodb as database.
 > In case you don't have mongoDB you can use mongoDB cloud edition by configuring (mongoose.js) in config directory.
 
