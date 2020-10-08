@@ -44,7 +44,10 @@ module.exports.getUserTags = async function (req, res) {
 module.exports.getPage = async function (req, res) {
   try {
     // open the headless browser
-    let browser = await puppeteer.launch({ headless: true });
+    let browser = await puppeteer.launch({
+      executablePath: "/usr/bin/chromium-browser",
+      headless: true,
+    });
     // open a new page
     let page = await browser.newPage();
     // enter url in page
@@ -172,7 +175,10 @@ module.exports.getPage = async function (req, res) {
 module.exports.getPageWithTag = async function (req, res) {
   try {
     // open the headless browser
-    let browser = await puppeteer.launch({ headless: true });
+    let browser = await puppeteer.launch({
+      executablePath: "/usr/bin/chromium-browser",
+      headless: true,
+    });
     // open a new page
     let page = await browser.newPage();
     // enter url in page
@@ -236,7 +242,10 @@ module.exports.getPageWithTag = async function (req, res) {
 module.exports.loadMoreWithTag = async function (req, res) {
   try {
     // open the headless browser
-    let browser = await puppeteer.launch({ headless: true });
+    let browser = await puppeteer.launch({
+      executablePath: "/usr/bin/chromium-browser",
+      headless: true,
+    });
     // open a new page
     let page = await browser.newPage();
     // enter url in page
