@@ -45,7 +45,7 @@ module.exports.getPage = async function (req, res) {
   try {
     // open the headless browser
     let browser = await puppeteer.launch({
-      executablePath: "/usr/bin/chromium-browser",
+      // executablePath: "/usr/bin/chromium-browser",
       headless: true,
     });
     // open a new page
@@ -130,8 +130,7 @@ module.exports.getPage = async function (req, res) {
       blogUrl: req.query.url,
     });
 
-    // console.log("one blog created" + posts.responses);
-
+    
     if (!blog) {
       await Blog.create({
         blogUrl: req.query.url,
@@ -176,13 +175,11 @@ module.exports.getPageWithTag = async function (req, res) {
   try {
     // open the headless browser
     let browser = await puppeteer.launch({
-      executablePath: "/usr/bin/chromium-browser",
+      // executablePath: "/usr/bin/chromium-browser",
       headless: true,
     });
-    // open a new page
+    
     let page = await browser.newPage();
-    // enter url in page
-    // console.log("I was here");
     let tag = req.params.tag.toLowerCase();
     await page.goto(`https://medium.com/hackernoon/tagged/${tag}`, {
       waitUntil: "domcontentloaded",
@@ -243,7 +240,7 @@ module.exports.loadMoreWithTag = async function (req, res) {
   try {
     // open the headless browser
     let browser = await puppeteer.launch({
-      executablePath: "/usr/bin/chromium-browser",
+      // executablePath: "/usr/bin/chromium-browser",
       headless: true,
     });
     // open a new page

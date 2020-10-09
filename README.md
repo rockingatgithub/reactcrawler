@@ -43,6 +43,16 @@ Go to api directory and then run below command in terminal or cmd.
   - http://localhost:3000
   - http://localhost:9000 (Server renderd page)
 
+## Test
+
+> Test are provided using mocha and chai.
+> Test files are present in test directory of api.
+> To run test run the commands below.
+
+```bash
+  npm run test
+```
+
 ## Contributing
 
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
