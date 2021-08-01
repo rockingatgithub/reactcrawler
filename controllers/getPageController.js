@@ -39,7 +39,7 @@ module.exports.getUserTags = async function (req, res) {
   }
 };
 
-// ====================================fetch page with puppeter=============================================
+// ====================================fwetch page with puppeter=============================================
 
 module.exports.getPage = async function (req, res) {
   try {
@@ -58,67 +58,29 @@ module.exports.getPage = async function (req, res) {
     await page.waitForSelector("a");
 
     let posts = await page.evaluate(async () => {
-      let avatarNodeList = document.querySelectorAll(
-        "div.postMetaInline-avatar.u-flex0 a img"
-      );
-      let blogAuthorList = document.querySelectorAll(
-        "div.postMetaInline.postMetaInline-authorLockup.ui-captionStrong.u-flex1.u-noWrapWithEllipsis a"
-      );
+      let titleNodeList = document.querySelectorAll(`h1`);
+      let blogParaList = document.querySelectorAll(`p`);
+      let hrefLinkList = document.querySelectorAll(`a`);
+      let responseList = document.querySelectorAll(`pre`);
+      let divList = document.querySelectorAll(`div`);
 
-      let readingTimeList = document.querySelectorAll("span.readingTime");
-
-      let blogImageList  = document.querySelectorAll("img.progressiveMedia-image.js-progressiveMedia-image");
-
-      let blogHeadingList = document.querySelectorAll("h3");
-
-      let blogCreatedAtList = document.querySelectorAll("time");
-
-      let hrefLinkList = document.querySelectorAll("a.link.link--darken");
-      let responseList = document.querySelectorAll("pre");
-      let divList = document.querySelectorAll("div");
-
-      let avatarLinkArray = [];
-      let authorListArray = [];
-      let readingListArray = [];
-      let blogImageArray = [];
-      let blogHeadingArray = [];
-      let blogCreatedAtArray = [];
-
+      let titleLinkArray = [];
+      let paraListArray = [];
       let hrefListArray = [];
       let responseListArray = [];
       let divListArray = [];
-      let authorsList = [];
       let tagsList = [];
       let minread = [];
 
-      for (let i = 0; i < avatarNodeList.length; i++) {
-        avatarLinkArray[i] = avatarNodeList[i].getAttribute("src");
+      for (let i = 0; i < titleNodeList.length; i++) {
+        titleLinkArray[i] = titleNodeList[i].innerText.trim();
       }
-
-      for (let i = 0; i < blogAuthorList.length; i++) {
-        authorListArray[i] = blogAuthorList[i].innerText.trim();
+      let lengthArr = blogParaList.length > 5 ? 5 : blogParaList.length;
+      for (let i = 2; i < lengthArr; i++) {
+        paraListArray[i] = blogParaList[i].innerText.trim();
       }
-
-      for(let i=0; i<readingTimeList.length; i++){
-        readingListArray[i] = readingTimeList[i].innerText.trim();
-      }
-
-      for(let i=0; i<blogImageList.length; i++){
-        blogImageArray[i] = blogImageList[i].getAttribute("src");
-      }
-
-
-      for(let i=0; i<blogHeadingList.length; i++){
-        blogImageArray[i] = blogHeadingList[i].innerText.trim();
-      }
-
-      for(let i=0; i<blogCreatedAtList.length; i++){
-        blogCreatedAtArray[i] = blogCreatedAtList[i].innerText.trim();
-      }
-
-      for (let i = 1; i < hrefLinkList.length; i++) {
-        if(!hrefLinkList[i].getAttribute("href").includes("https://medium.com/@"))
-          hrefListArray[i] = hrefLinkList[i].getAttribute("href").trim();
+      for (let i = 0; i < hrefLinkList.length; i++) {
+        hrefListArray[i] = hrefLinkList[i].getAttribute("href").trim();
       }
 
       for (let i = 0; i < responseList.length; i++) {
@@ -128,10 +90,6 @@ module.exports.getPage = async function (req, res) {
       for (let i = 0; i < divList.length; i++) {
         divListArray[i] = divList[i].innerText;
       }
-
-      authorsList = hrefListArray.filter((str) => {
-        return str[1] === "@";
-      });
 
       tagsList = hrefListArray.filter((str) => {
         return str.includes("tagged");
@@ -152,7 +110,6 @@ module.exports.getPage = async function (req, res) {
         blogContent: paraListArray[0],
         wholeBlogContent: paraListArray,
         links: hrefListArray,
-        author: authorsList[0].substr(1, authorsList[0].indexOf("?") - 1),
         tags: tagsList,
         responseUser: responseUser,
         responses: responseListArray,
@@ -172,7 +129,7 @@ module.exports.getPage = async function (req, res) {
         blogUrl: req.query.url,
         blogHeading: posts.heading,
         blogContent: posts.blogContent,
-        blogAuthor: posts.author,
+        blogAuthor: req.query.author,
         blogTags: posts.tags,
       });
     }
@@ -235,77 +192,28 @@ module.exports.getPageWithTag = async function (req, res) {
     await page.waitForSelector("a");
 
     let posts = await page.evaluate(() => {
-      let avatarNodeList = document.querySelectorAll(
-        "div.postMetaInline-avatar.u-flex0 a img"
-      );
-      let blogAuthorList = document.querySelectorAll(
-        "div.postMetaInline.postMetaInline-authorLockup.ui-captionStrong.u-flex1.u-noWrapWithEllipsis a"
+      let postsList = document.querySelectorAll("div.postArticle-readMore > a");
+      let authorsLinkList = document.querySelectorAll(
+        "a.link.u-baseColor--link.avatar"
       );
 
-      let readingTimeList = document.querySelectorAll("span.readingTime");
-
-      let blogImageList  = document.querySelectorAll("img.progressiveMedia-image.js-progressiveMedia-image");
-
-      let blogHeadingList = document.querySelectorAll("h3");
-
-      let blogCreatedAtList = document.querySelectorAll("time");
-
-      let hrefLinkList = document.querySelectorAll("a.link.link--darken");
-      let responseList = document.querySelectorAll("pre");
-      let divList = document.querySelectorAll("div");
-
-      let avatarLinkArray = [];
-      let authorListArray = [];
-      let readingListArray = [];
-      let blogImageArray = [];
-      let blogHeadingArray = [];
-      let blogCreatedAtArray = [];
       let hrefListArray = [];
+      let authorsListArray = [];
 
-      for (let i = 0; i < avatarNodeList.length; i++) {
-        avatarLinkArray[i] = avatarNodeList[i].getAttribute("src");
+      for (let i = 0; i < postsList.length; i++) {
+        hrefListArray[i] = postsList[i].getAttribute("href").trim();
       }
 
-      for (let i = 0; i < blogAuthorList.length; i++) {
-        authorListArray[i] = blogAuthorList[i].innerText.trim();
-      }
-
-      for(let i=0; i<readingTimeList.length; i++){
-        readingListArray[i] = readingTimeList[i].innerText.trim();
-      }
-
-      for(let i=0; i<blogImageList.length; i++){
-        blogImageArray[i] = blogImageList[i].getAttribute("src");
-      }
-
-
-      for(let i=0; i<blogHeadingList.length; i++){
-        blogHeadingArray[i] = blogHeadingList[i].innerText.trim();
-      }
-
-      for(let i=0; i<blogCreatedAtList.length; i++){
-        blogCreatedAtArray[i] = blogCreatedAtList[i].innerText.trim();
-      }
-
-      for (let i = 1; i < hrefLinkList.length; i++) {
-        if(!hrefLinkList[i].getAttribute("href").includes("https://medium.com/@"))
-          hrefListArray[i] = hrefLinkList[i].getAttribute("href").trim();
-      }
-
-      //store the page and data in database.....................................
+      authorsLinkList.forEach((link) =>
+        link.getAttribute("href").includes("@")
+          ? authorsListArray.push(link.getAttribute("href").split("@")[1])
+          : null
+      );
 
       let postListArray = {
-        heading: titleLinkArray[0],
-        blogContent: paraListArray[0],
-        wholeBlogContent: paraListArray,
-        links: hrefListArray,
-        author: authorsList[0].substr(1, authorsList[0].indexOf("?") - 1),
-        tags: tagsList,
-        responseUser: responseUser,
-        responses: responseListArray,
-        timeRead: minread,
+        hrefListArray: hrefListArray,
+        authorsListArray: authorsListArray,
       };
-
       return postListArray;
     });
 
@@ -356,25 +264,31 @@ module.exports.loadMoreWithTag = async function (req, res) {
     }
 
     await page.waitForSelector("a");
-    let num1 = 0;
-    let num2 = 0;
+
     let posts = await page.evaluate(() => {
-      let postsdiv = document.querySelectorAll(
-        "div.streamItem.streamItem--postPreview.js-streamItem"
-      );
       let postsList = document.querySelectorAll("div.postArticle-readMore > a");
-      num1 = postsList.length;
       window.scrollTo(0, document.body.scrollHeight);
       postsList = document.querySelectorAll("div.postArticle-readMore > a");
-      num2 = postsList.length;
+      let authorsLinkList = document.querySelectorAll(
+        "a.link.u-baseColor--link.avatar"
+      );
+
       let hrefListArray = [];
+      let authorsListArray = [];
 
       for (let i = 0; i < postsList.length; i++) {
         hrefListArray[i] = postsList[i].getAttribute("href").trim();
       }
 
+      authorsLinkList.forEach((link) =>
+        link.getAttribute("href").includes("@")
+          ? authorsListArray.push(link.getAttribute("href").split("@")[1])
+          : null
+      );
+
       let postListArray = {
         hrefListArray: hrefListArray,
+        authorsListArray: authorsListArray,
       };
       return postListArray;
     });
